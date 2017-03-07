@@ -12,10 +12,10 @@ class sumSimple:
         self.odd_petition = True
         self.last_num = 0
 
-    def parse(self, request):
+    def parse(self, request, rest):
         """Parse the received request, extracting the relevant information."""
 
-        return None
+        return rest[1:]
 
     def process(self, parsedRequest):
         """Process the relevant elements of the request.
@@ -23,18 +23,21 @@ class sumSimple:
         Returns the HTTP code for the reply, and an HTML page.
         """
 
-        if parsedRequest.isdigit():
-            if self.odd_petition:
-                return("HTTP/1.1 200 OK\r\n\r\n" +
-                                "<html><body><h1>Me has enviado un :</h1>" +
-                                "<p>" + parsedRequest + " ,enviame otro y hare la suma </p>" +
-                                "</body></html>" + "\r\n")
+        if self.odd_petition:
+            try:
                 self.last_num = int(parsedRequest)
-                self.odd_petition = False
-            else:
-                suma = str(last_num + int(recurso))
-                self.odd_petition = True
-                return("HTTP/1.1 200 OK\r\n\r\n" +
-                                "<html><body><h1>La suma es :</h1>" +
-                                "<p>" + suma + "</p>" +
-                                "</body></html>" + "\r\n")
+            except ValueError:
+                return ("HTTP/1.1 404 Not Found", "<html><body><p>Introduzca un numero por favor</p></body></html>")
+            self.odd_petition = False
+            return ("HTTP/1.1 200 OK", "<html><body><h1>Me has enviado un :</h1>" +
+                            "<p>" + parsedRequest + " ,enviame otro y hare la suma </p>" +
+                            "</body></html>" )
+        else:
+            try:
+                suma = str(self.last_num + int(parsedRequest))
+            except ValueError:
+                return ("HTTP/1.1 404 Not Found", "<html><body><p>Introduzca un numero por favor</p></body></html>")
+            self.odd_petition = True
+            return("200 OK", "<html><body><h1>La suma es :</h1>" +
+                            "<p>" + suma + "</p>" +
+                            "</body></html>" )

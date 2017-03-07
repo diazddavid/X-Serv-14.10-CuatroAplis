@@ -8,7 +8,7 @@ class hola:
     will implement the logic of a web application in particular.
     """
 
-    def parse(self, request):
+    def parse(self, request, rest):
         """Parse the received request, extracting the relevant information."""
 
         return None
@@ -19,8 +19,7 @@ class hola:
         Returns the HTTP code for the reply, and an HTML page.
         """
 
-        return("HTTP/1.1 200 OK\r\n\r\n" +
-                "<html><body><h1> HOLA </h1></body></html>" + "\r\n")
+        return("200 OK", "<html><body><h1> HOLA </h1></body></html>")
 
 class adios:
     """Root of a hierarchy of classes implementing web applications
@@ -30,7 +29,7 @@ class adios:
     will implement the logic of a web application in particular.
     """
 
-    def parse(self, request):
+    def parse(self, request, rest):
         """Parse the received request, extracting the relevant information."""
 
         return None
@@ -41,5 +40,4 @@ class adios:
         Returns the HTTP code for the reply, and an HTML page.
         """
 
-        return("HTTP/1.1 200 OK\r\n\r\n" +
-                "<html><body><h1> ADIOS </h1></body></html>" + "\r\n")
+        return("200 OK", "<html><body><h1> ADIOS </h1></body></html>" )
